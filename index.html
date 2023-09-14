@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Country Redirect</title>
+    <script>
+        function redirectToCountry() {
+            // Get the user's country using a third-party API (e.g., freegeoip.app)
+            fetch('https://freegeoip.app/json/')
+                .then(response => response.json())
+                .then(data => {
+                    const country = data.country_code;
+
+                    // Define the redirection URLs for different countries
+                    const redirections = {
+                        'LK': 'https://singingfiles.com/show.php?l=0&u=8436&id=54770', // Sri Lanka
+                        'JM': 'https://singingfiles.com/show.php?l=0&u=8436&id=54622', // Jamaica
+                        'IN': 'https://www.facebook.com', // India
+                        // Add more countries and their URLs as needed
+                    };
+
+                    // Get the link element
+                    const countryLink = document.getElementById('countryLink');
+
+                    // Update the link's href based on the user's country
+                    if (redirections[country]) {
+                        countryLink.href = redirections[country];
+                    } else {
+                        countryLink.href = 'https://www.google.com'; // Fallback
+                    }
+
+                    // Make the link visible
+                    countryLink.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</head>
+<body>
+    <!-- Link for users to click -->
+    <a id="countryLink" style="display: none;">Click here to go to your country's link</a>
+
+    <!-- This is the fallback content in case JavaScript is disabled or there's an issue with the API -->
+    <p>If you are not redirected, <a href="https://www.google.com">click here</a>.</p>
+
+    <!-- Call the redirection function when the page loads -->
+    <script>redirectToCountry();</script>
+</body>
+</html>
